@@ -25,7 +25,7 @@ async function Apiresponse(value: string) {
 
   try {
     const respose = await axios.get(
-      "https://api.github.com/orgs/crystaldelta/repos",
+      "http://api.github.com/orgs/crystaldelta/repos",
       {
         headers: { Authorization: `Bearer ${Token}` },
       }
@@ -59,7 +59,7 @@ export const PostData = async (value: string) => {
       }
       await ApiRepo.save(data);
     }
-    // console.log(data);
+    console.log(data);
 
     await ApiRepo.save(data);
     return;

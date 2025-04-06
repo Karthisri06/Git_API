@@ -10,12 +10,14 @@ app.use(express.json());
 app.use(cors());
 
 AppDataSource.initialize().then(()=>{
-    console.log("Connected to database");
-
-    app.use("/auth", router); 
 
     app.listen(4000,()=>{
         console.log("Server is running on port 4000");
     });
 
+    console.log("Connected to database");
+
+    app.use("/auth", router); 
+
+    
 });
