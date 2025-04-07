@@ -13,14 +13,14 @@ import { Api } from "../Entity/Cd";
 export const router = Router();
 const APIcontrol = new ApiController();
 
-router.get("/getapi", APIcontrol.GetApiData);
-router.put("/updateapi/:id", APIcontrol.UpdateApiData);
-router.delete("/deleteapi/:id", APIcontrol.DeleteApiData);
+router.get("/repos", APIcontrol.GetApiData);
+router.put("/repos/:id", APIcontrol.UpdateApiData);
+router.delete("/repos/:id", APIcontrol.DeleteApiData);
 
 
-router.get("/ping", (req, res) => {
-  res.send("pong");
-});
+// router.get("/ping", (req, res) => {
+//   res.send("pong");
+// });
 
 
 router.get("/check", async (req: Request, res: Response): Promise<void> => {
@@ -74,3 +74,12 @@ router.get("/callback", async (req: Request, res: Response): Promise<void> => {
 export default router;
 
 
+// {
+//   "name":"cd1",
+//   "full_name":"crystal",
+//   "created_at":"14-05-2021",
+//   "updated_at":"14-06-2021",
+//   "pushed_at":"14-07-2021",
+//   "language":"shell",
+//   "id":"45152187"
+// }
