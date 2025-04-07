@@ -12,7 +12,6 @@ interface APIDATA {
   id: number;
   name: string;
   full_name: string;
-  owner: { login: string };
   created_at: string;
   updated_at: string;
   pushed_at: string;
@@ -69,10 +68,3 @@ export const PostData = async (value: string) => {
 };
 
 export default PostData;
-
-
-
-
-
-
-

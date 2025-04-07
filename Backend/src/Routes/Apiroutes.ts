@@ -4,7 +4,9 @@ import axios from "axios";
 import { Request, Response } from "express";
 import { v4 } from "uuid";
 import { stringify } from "querystring";
-import { PostData } from "../Seeders/Apiseeder";
+import { PostData } from "../Controllers/Auth";
+import { AppDataSource } from "../data-source";
+import { Api } from "../Entity/Cd";
 
 
 
@@ -15,17 +17,6 @@ router.get("/getapi", APIcontrol.GetApiData);
 router.put("/updateapi/:id", APIcontrol.UpdateApiData);
 router.delete("/deleteapi/:id", APIcontrol.DeleteApiData);
 
-// router.get("/check", async (req: Request, res: Response): Promise<void> => {
-//   const query = {
-//     client_id: process.env.CLIENT_ID,
-//     redirect_uri: process.env.REDIRECT_URI,
-//     state: v4(),
-//   };
-//   const tokenUrl = `https://github.com/login/oauth/authorize?${stringify(
-//     query
-//   )}`;
-//   res.redirect(tokenUrl);
-// });
 
 router.get("/ping", (req, res) => {
   res.send("pong");
@@ -34,7 +25,7 @@ router.get("/ping", (req, res) => {
 
 router.get("/check", async (req: Request, res: Response): Promise<void> => {
   try {
-    console.log("✅ /check route hit");
+    console.log("/check route hit");
     const query = {
       client_id: process.env.CLIENT_ID,
       redirect_uri: process.env.REDIRECT_URI,
@@ -50,9 +41,10 @@ router.get("/check", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-router.post("/callback", async (req: Request, res: Response): Promise<void> => {
+router.get("/callback", async (req: Request, res: Response): Promise<void> => {
   const response = await axios({
     url: "https://github.com/login/oauth/access_token",
+    method:"post",
     headers: {
       Accept: "application/json",
     },
@@ -63,11 +55,22 @@ router.post("/callback", async (req: Request, res: Response): Promise<void> => {
       redirect_uri: process.env.REDIRECT_URI,
     },
   });
-  const token = response.data.acces_token;
-  console.log(token, " the original token");
+  const token = response.data.access_token;
+  console.log(token, " Access token");
   await PostData(token);
-  res.redirect("http://localhost:2900");
+  res.redirect("http://localhost:5173");
+  
 });
+
+// router.get("/repos", async (req, res) => {
+//   try {
+//     const repoRepo = AppDataSource.getRepository(Api);
+//     const repos = await repoRepo.find();
+//     res.status(200).json(repos);
+//   } catch (err) {
+//     res.status(500).json({ message: "Failed to fetch repos", error: err });
+//   }
+// });
 export default router;
 
 
